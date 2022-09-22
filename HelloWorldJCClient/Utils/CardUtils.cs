@@ -1,4 +1,4 @@
-namespace HelloWorldJCClient;
+namespace HelloWorldJCClient.Utils;
 
 public static class CardUtils
 {
@@ -9,7 +9,7 @@ public static class CardUtils
 		return cardContext;
 	}
 	
-	public static (ISCardContext, IsoReader) GetIsoReaderInstance()
+	public static (ISCardContext, IsoReader) GetReader()
 	{
 		var cardContext = GetCardContext();
 		var readerNames = cardContext.GetReaders();
@@ -17,7 +17,7 @@ public static class CardUtils
 		return (cardContext, isoReader);
 	}
 	
-	public static bool IsCardResponseOk(Response response)
+	public static bool IsResponseSuccess(Response response)
 	{
 		return response.SW1 == 0x90 && response.SW2 == 0x00;
 	}

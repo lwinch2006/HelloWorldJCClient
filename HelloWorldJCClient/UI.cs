@@ -1,9 +1,29 @@
+using HelloWorldJCClient.Models;
+using HelloWorldJCClient.Services;
+
 namespace HelloWorldJCClient;
 
-public static class UI
+public class UI
 {
-	public static void PrintWelcome()
+	private readonly CardService _cardService;
+	private readonly UserService _userService;
+
+	public UI()
 	{
+		_cardService = new CardService();
+		_userService = new UserService();
+	}
+
+	public void Run()
+	{
+		PrintWelcome();
+		_cardService.StartCardMonitor(PrintGetUserData, PrintWelcome);
+		WaitPressAnyKeyAndExit();
+	}
+	
+	private void PrintWelcome()
+	{
+		Console.Clear();
 		Console.WriteLine("╔═════════════════════════════════════════════╗");
 		Console.WriteLine("║                                             ║");
 		Console.WriteLine("║       Personal Identity Verification        ║");
@@ -14,39 +34,32 @@ public static class UI
 		Console.WriteLine("║                                             ║");
 		Console.WriteLine("║                                             ║");
 		Console.WriteLine("╚═════════════════════════════════════════════╝");
+		Console.WriteLine();
 	}
-	
-	public static void PrintSmartCardReaders()
+
+	private void PrintGetUserData()
 	{
-		Console.WriteLine("Currently connected readers");
-		foreach (var readerName in Service.GetCardReaders())
+		try
 		{
-			Console.WriteLine(readerName);
+			var user = _userService.GetUser();
+		
+			Console.Clear();
+			PrintWelcome();
+			Console.WriteLine("Firstname: {0}", user.FirstName);
+			Console.WriteLine("Lastname: {0}", user.Lastname);
+			Console.WriteLine("Email: {0}", user.Email);
+			Console.WriteLine("Phone: {0}", user.Phone);
+		}
+		catch (OperationException ex)
+		{
+			Console.WriteLine(ex.Message);
 		}
 	}
 
-	public static void PrintEmptyLines(int lineCount)
-	{
-		for (var i = 0; i < lineCount; i++)
-		{
-			Console.WriteLine();
-		}
-	}
-
-	public static void DoWork()
-	{
-		Service.StartCardMonitor(PrintGetResponse);
-	}
-	
-	public static void PrintGetResponse()
-	{
-		Console.WriteLine(Service.GetResponse());
-	}
-
-	public static void WaitPressAnyKeyAndExit()
+	private void WaitPressAnyKeyAndExit()
 	{
 		Console.ReadKey();
-		Service.StopCardMonitor();
+		_cardService.StopCardMonitor();
 		Console.WriteLine("Exited");
 	}
 }
