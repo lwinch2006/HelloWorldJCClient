@@ -9,6 +9,7 @@ public static class Service
 	public static IEnumerable<string> GetCardReaders()
 	{
 		using var cardContext = CardUtils.GetCardContext();
+		
 		return cardContext.GetReaders();
 	}
 
