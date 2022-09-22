@@ -396,3 +396,9 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# Misc folders/files
+.idea/
+appsettings.Development.json
+dka.*
+dka.*/
