@@ -1,23 +1,26 @@
-using HelloWorldJCClient.Models;
-using HelloWorldJCClient.Services;
+using System.Diagnostics;
+using Application;
+using Application.Models;
+using Infrastructure;
+using JCClientCore;
+using JCClientCore.Models;
 
-namespace HelloWorldJCClient;
+
+namespace ConsoleApp;
 
 public class UI
 {
-	private readonly CardService _cardService;
-	private readonly UserService _userService;
+	private readonly IJCClient _jcClient;
 
 	public UI()
 	{
-		_cardService = new CardService();
-		_userService = new UserService();
+		_jcClient = new JCClient();
 	}
 
 	public void Run()
 	{
 		PrintWelcome();
-		_cardService.StartCardMonitor(PrintGetUserData, PrintWelcome);
+		_jcClient.StartCardMonitor(PrintGetUserData, PrintWelcome);
 		WaitPressAnyKeyAndExit();
 	}
 	
@@ -41,7 +44,11 @@ public class UI
 	{
 		try
 		{
-			var user = _userService.GetUser();
+			var stopWatch = new Stopwatch();
+			stopWatch.Start();
+			
+			var userService = new UserService(new JCUserRepository(_jcClient));
+			var user = userService.GetUser();
 		
 			Console.Clear();
 			PrintWelcome();
@@ -49,8 +56,14 @@ public class UI
 			Console.WriteLine("Lastname: {0}", user.Lastname);
 			Console.WriteLine("Email: {0}", user.Email);
 			Console.WriteLine("Phone: {0}", user.Phone);
+			Console.WriteLine("Photo: {0}", user.Photo.Length > 0 ? "yes" : "no");
+			
+			stopWatch.Stop();
+			var elapsed = stopWatch.Elapsed;
+			Console.WriteLine();
+			Console.WriteLine("Time: {0} seconds", elapsed.TotalSeconds);
 		}
-		catch (OperationException ex)
+		catch (CardOperationException ex)
 		{
 			Console.WriteLine(ex.Message);
 		}
@@ -59,7 +72,7 @@ public class UI
 	private void WaitPressAnyKeyAndExit()
 	{
 		Console.ReadKey();
-		_cardService.StopCardMonitor();
+		_jcClient.StopCardMonitor();
 		Console.WriteLine("Exited");
 	}
 }

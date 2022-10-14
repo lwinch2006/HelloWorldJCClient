@@ -1,4 +1,4 @@
-namespace HelloWorldJCClient.Models;
+namespace Application.Models;
 
 public class OperationException : Exception
 {

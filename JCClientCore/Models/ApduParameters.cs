@@ -1,4 +1,4 @@
-namespace HelloWorldJCClient.Models;
+namespace JCClientCore.Models;
 
 public class ApduParameters
 {
