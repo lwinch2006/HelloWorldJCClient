@@ -1,0 +1,41 @@
+@model MvcWebApp.Models.UserDetails.UserDetailsViewModel
+
+@{
+    ViewData["Title"] = "User details";
+}
+
+<div class="row">
+    <div class="col">
+        <img src="@Url.Action("GetUserPhoto")"/>
+    </div>
+</div>
+<h3>User details</h3>
+<div class="row">
+    <div class="col-sm-2">
+        First name
+    </div>
+    <div class="col-auto">@Model.FirstName</div>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+        Last name
+    </div>
+    <div class="col-auto">@Model.Lastname</div>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+        Email
+    </div>
+    <div class="col-auto">@Model.Email</div>
+</div>
+<div class="row">
+    <div class="col-sm-2">
+        Phone
+    </div>
+    <div class="col-auto">@Model.Phone</div>
+</div>
+
+
+    
+    
+    

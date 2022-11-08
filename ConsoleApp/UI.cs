@@ -1,6 +1,5 @@
 using System.Diagnostics;
-using Application;
-using Application.Models;
+using BusinessLogic;
 using Infrastructure;
 using JCClientCore;
 using JCClientCore.Models;
@@ -48,7 +47,7 @@ public class UI
 			stopWatch.Start();
 			
 			var userService = new UserService(new JCUserRepository(_jcClient));
-			var user = userService.GetUser();
+			var user = userService.GetUserWithoutPhoto();
 		
 			Console.Clear();
 			PrintWelcome();
@@ -62,6 +61,11 @@ public class UI
 			var elapsed = stopWatch.Elapsed;
 			Console.WriteLine();
 			Console.WriteLine("Time: {0} seconds", elapsed.TotalSeconds);
+			
+			if (user.Photo.Length > 0)
+			{
+				File.WriteAllBytes("photo.webp", user.Photo);
+			}
 		}
 		catch (CardOperationException ex)
 		{

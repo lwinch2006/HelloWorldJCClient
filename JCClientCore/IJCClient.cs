@@ -10,5 +10,7 @@ public interface IJCClient
 	void StartCardMonitor(Action cardInsertedEventHandler, Action cardRemovedEventHandler);
 	void StopCardMonitor();
 	void SelectApplet(string aid, string delimiter = ":");
+	bool TrySelectApplet(string aid, string delimiter = ":");
 	byte[] GetCardData(ApduParameters apduParameters);
+	byte[] TryGetCardData(ApduParameters apduParameters);
 }

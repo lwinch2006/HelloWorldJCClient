@@ -1,0 +1,24 @@
+<div class="card box-shadow user-details-container" style="@CssStyle">
+    <div class="card-body">
+        <div class="py-3 row">
+            <div class="col">
+                <div class="text-center">
+                    <img alt="Photo" src="@_imageDataUrl"/>
+                </div>
+                <div class="text-center">
+                    <div class="user-details-fields-container d-inline-block">
+                        <ReadOnlyFieldWithLabel Type="text" Label="First name" Placeholder="First name" Value="@_firstName"/>
+                        <ReadOnlyFieldWithLabel Type="text" Label="Last name" Placeholder="Last name" Value="@_lastName"/>
+                        <ReadOnlyFieldWithLabel Type="email" Label="Email" Placeholder="Email" Value="@_email"/>
+                        <ReadOnlyFieldWithLabel Type="tel" Label="Phone" Placeholder="Phone" Value="@_phone"/>
+                        <ReadOnlyFieldWithLabel Type="text" Label="Photo" Placeholder="Photo" Value="@_photo"/>
+                        <ReadOnlyFieldWithLabel Type="text" Label="Time" Placeholder="Time" Value="@_elapsed"/>
+                    </div>
+                    <div>
+                        <button type="button" class="btn btn-primary" @onclick="@(() => Refresh?.Invoke())">Refresh</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

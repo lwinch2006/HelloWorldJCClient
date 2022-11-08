@@ -3,6 +3,7 @@ using Infrastructure.Extentions;
 using Infrastructure.Models;
 using JCClientCore;
 
+
 namespace Infrastructure;
 
 public class JCUserRepository : IUserRepository
@@ -12,13 +13,13 @@ public class JCUserRepository : IUserRepository
 	public JCUserRepository(IJCClient jcClient)
 	{
 		_jcClient = jcClient;
-		_jcClient.SelectApplet(InfrastructureConstants.AppletAID);
+		_jcClient.TrySelectApplet(InfrastructureConstants.AppletAID);
 	}
 	
 	public string GetFirstName()
 	{
 		var apduParameters = UserApduParamsFactory.GetFirstName();
-		var firstNameAsBytes = _jcClient.GetCardData(apduParameters).TrimEnd();
+		var firstNameAsBytes = _jcClient.TryGetCardData(apduParameters).TrimEnd();
 		var firstname = Encoding.ASCII.GetString(firstNameAsBytes);
 		return firstname;
 	}
@@ -26,7 +27,7 @@ public class JCUserRepository : IUserRepository
 	public string GetLastName()
 	{
 		var apduParameters = UserApduParamsFactory.GetLastName();
-		var lastNameAsBytes = _jcClient.GetCardData(apduParameters).TrimEnd();
+		var lastNameAsBytes = _jcClient.TryGetCardData(apduParameters).TrimEnd();
 		var lastName = Encoding.ASCII.GetString(lastNameAsBytes);
 		return lastName;
 	}
@@ -34,7 +35,7 @@ public class JCUserRepository : IUserRepository
 	public string GetEmail()
 	{
 		var apduParameters = UserApduParamsFactory.GetEmail();
-		var emailAsBytes = _jcClient.GetCardData(apduParameters).TrimEnd();
+		var emailAsBytes = _jcClient.TryGetCardData(apduParameters).TrimEnd();
 		var email = Encoding.ASCII.GetString(emailAsBytes);
 		return email;
 	}
@@ -42,7 +43,7 @@ public class JCUserRepository : IUserRepository
 	public string GetPhone()
 	{
 		var apduParameters = UserApduParamsFactory.GetPhone();
-		var phoneAsBytes = _jcClient.GetCardData(apduParameters).TrimEnd();
+		var phoneAsBytes = _jcClient.TryGetCardData(apduParameters).TrimEnd();
 		var phone = Encoding.ASCII.GetString(phoneAsBytes);
 		return phone;
 	}
@@ -50,7 +51,7 @@ public class JCUserRepository : IUserRepository
 	public byte[] GetPhoto()
 	{
 		var apduParameters = UserApduParamsFactory.GetPhoto();
-		var photo = _jcClient.GetCardData(apduParameters).TrimEnd();
+		var photo = _jcClient.TryGetCardData(apduParameters).TrimEnd();
 		return photo;
 	}
 }
