@@ -30,7 +30,7 @@ public partial class Scan : ComponentBase
 		}
 
 		var photoBytes = await Http.GetByteArrayAsync("images/photo-exported-256.webp");
-		_user = new ReadOnlyUserDetails.UserVm("Dmitry", "Kalinin", "Dmitry.Kalinin@icloud.com", "+4711223344", photoBytes);
+		_user = new ReadOnlyUserDetails.UserVm("John", "Doe", "John.Doe@test.com", "+4711223344", photoBytes);
 	}
 
 	private async Task Refresh()
