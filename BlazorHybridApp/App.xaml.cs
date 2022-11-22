@@ -10,10 +10,15 @@ public partial class App : Application
 
 	protected override Window CreateWindow(IActivationState? activationState)
 	{
-		var window = base.CreateWindow(activationState);
-		window.Title = "Test";
-		window.Height = 300.0;
-		window.Width = 300.0;
+		var window = new CustomWindow(MainPage!)
+		{
+			Title = BlazorHubridAppConstants.WindowTitle,
+			MinimumHeight = 1000.0,
+			MaximumHeight = 1000.0,
+			MinimumWidth = 500.0,
+			MaximumWidth = 500.0
+		};
+
 		return window;
 	}
 }
