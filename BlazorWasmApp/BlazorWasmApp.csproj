@@ -8,6 +8,7 @@
         
         <BlazorWebAssemblyEnableLinking>false</BlazorWebAssemblyEnableLinking>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <AssemblyName>Dka.Net.HelloWorldJCClient.BlazorWasmApp</AssemblyName>
     </PropertyGroup>
 
     <ItemGroup>

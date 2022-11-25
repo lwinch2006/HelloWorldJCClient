@@ -6,7 +6,7 @@ public partial class ReadOnlyUserDetails : ComponentBase
 {
 	public record UserVm(string? FirstName, string? LastName, string? Email, string? Phone, byte[]? Photo);
 
-	private const string DefaultImageUrl = "_content/BlazorComponents/images/default-photo.webp";
+	private const string DefaultImageUrl = "_content/Dka.Net.HelloWorldJCClient.BlazorComponents/images/default-photo.webp";
 
 	private string _imageDataUrl = default!;
 
