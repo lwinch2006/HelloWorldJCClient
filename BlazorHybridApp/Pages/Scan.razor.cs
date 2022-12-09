@@ -1,5 +1,5 @@
 using System.Diagnostics;
-using BlazorComponents.Components;
+using BlazorComponents.Models;
 using BusinessLogic;
 using Infrastructure;
 using JCClientCore;
@@ -10,7 +10,7 @@ namespace BlazorHybridApp.Pages;
 
 public partial class Scan : ComponentBase
 {
-	private ReadOnlyUserDetails.UserVm? _userVm;
+	private ReadOnlyUser? _userVm;
 
 	private bool _isProgressing;
 	private string? _errorMessage;
@@ -61,7 +61,7 @@ public partial class Scan : ComponentBase
 			_userVm = null;
 			if (user != null)
 			{
-				_userVm = new ReadOnlyUserDetails.UserVm(user.FirstName, user.Lastname, user.Email, user.Phone, user.Photo);
+				_userVm = new ReadOnlyUser(user.FirstName, user.Lastname, user.Email, user.Phone, user.Photo);
 			}
 			
 			stopWatch.Stop();

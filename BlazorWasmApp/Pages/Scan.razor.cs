@@ -1,56 +1,24 @@
-using System.Diagnostics;
-using BlazorComponents.Components;
+using Fluxor;
 using Microsoft.AspNetCore.Components;
+using UiShared.Models.Blazor.Redux.Actions;
+using UiShared.Models.Blazor.Redux.Stores;
 
 namespace BlazorWasmApp.Pages;
 
-public partial class Scan : ComponentBase
+public partial class Scan
 {
-	private bool _isProgressing;
-	private string? _errorMessage;
-	private ReadOnlyUserDetails.UserVm? _user;
-	private TimeSpan _elapsed;
-
-	private bool _sampleUser = false;
-
 	[Inject] private HttpClient Http { get; init; } = default!;
 
-	protected override async Task OnInitializedAsync()
-	{
-		await InitDefaultUserAndImage();
-		await base.OnInitializedAsync();
-	}
+	[Inject] private IState<AppStore> State { get; set; } = default!;
 	
-	private async Task InitDefaultUserAndImage(bool sampleUser = false)
-	{
-		if (!sampleUser)
-		{
-			_user = null;
-			return;
-		}
+	[Inject] private IDispatcher Dispatcher { get; set; } = default!;
 
-		var photoBytes = await Http.GetByteArrayAsync("images/photo-exported-256.webp");
-		_user = new ReadOnlyUserDetails.UserVm("John", "Doe", "John.Doe@test.com", "+4711223344", photoBytes);
-	}
+	private AppStore AppStore => State.Value;
 
 	private async Task Refresh()
 	{
-		_sampleUser = !_sampleUser;
+		await Task.Delay(10);
 		
-		var stopWatch = new Stopwatch();
-		stopWatch.Start();
-		
-		_isProgressing = true;
-		await InvokeAsync(StateHasChanged);
-
-		await Task.Delay(3000);
-		
-		await InitDefaultUserAndImage(_sampleUser);
-
-		stopWatch.Stop();
-		_elapsed = stopWatch.Elapsed;
-		
-		_isProgressing = false;
-		await InvokeAsync(StateHasChanged);
+		Dispatcher.Dispatch(new ReadDummyUserFromCardAction());
 	}
 }

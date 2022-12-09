@@ -1,14 +1,15 @@
-﻿@page "/"
+﻿@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@page "/"
 <PageTitle>Scan</PageTitle>
 
-@if (!string.IsNullOrWhiteSpace(_errorMessage))
+@if (!string.IsNullOrWhiteSpace(AppStore.ErrorMessage))
 {
-    <p>@_errorMessage</p>
+    <p>@AppStore.ErrorMessage</p>
 }
 else
 {
-    <ReadOnlyUserDetails CssStyle="margin-top: 2rem;" User="@_user" Time="@_elapsed" Refresh="@(async () => await Refresh())"/>
-    if (_isProgressing)
+    <ReadOnlyUserDetails CssStyle="margin-top: 2rem;" User="@AppStore.UserRead" Time="@AppStore.Elapsed" Refresh="@(async () => await Refresh())"/>
+    if (AppStore.IsLoading)
     {
         <div class="card progressbar-container">
             <div class="card-body d-flex justify-content-center align-items-center">

@@ -1,11 +1,10 @@
+using BlazorComponents.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorComponents.Components;
 
 public partial class ReadOnlyUserDetails : ComponentBase
 {
-	public record UserVm(string? FirstName, string? LastName, string? Email, string? Phone, byte[]? Photo);
-
 	private const string DefaultImageUrl = "_content/Dka.Net.HelloWorldJCClient.BlazorComponents/images/default-photo.webp";
 
 	private string _imageDataUrl = default!;
@@ -19,7 +18,7 @@ public partial class ReadOnlyUserDetails : ComponentBase
 
 	[Parameter] public string? CssStyle { get; set; }
 
-	[Parameter] public UserVm? User { get; set; }
+	[Parameter] public ReadOnlyUser? User { get; set; }
 
 	[Parameter] public TimeSpan Time { get; set; }
 
@@ -41,7 +40,7 @@ public partial class ReadOnlyUserDetails : ComponentBase
 		_imageDataUrl = GetImageDataUrl(User);
 	}
 
-	private string GetImageDataUrl(UserVm? user)
+	private string GetImageDataUrl(ReadOnlyUser? user)
 	{
 		if (user?.Photo?.Length > 0 != true)
 		{
