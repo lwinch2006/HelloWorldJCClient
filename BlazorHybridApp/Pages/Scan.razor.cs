@@ -16,14 +16,21 @@ public partial class Scan : ComponentBase
 	private string? _errorMessage;
 	private TimeSpan _elapsed;
 
-	private IJCClient _jcMonitorClient = default!;
+	[Inject] private IJCClient JcMonitorClient { get; set; } = default!;
+	[Inject] private IUserService UserService { get; set; } = default!;
+	
+	
+	
+	
+	
+	
+	
 	
 	protected override void OnInitialized()
 	{
 		try
 		{
-			_jcMonitorClient = new JCClient();
-			_jcMonitorClient.StartCardMonitor(() => Task.WaitAll(Refresh()), () => Task.WaitAll(ClearWindow()));
+			JcMonitorClient.StartCardMonitor(() => Task.WaitAll(Refresh()), () => Task.WaitAll(ClearWindow()));
 		}
 		catch (Exception ex)
 		{
@@ -43,9 +50,9 @@ public partial class Scan : ComponentBase
 		_isProgressing = true;
 		await InvokeAsync(StateHasChanged);
 			
-		_jcMonitorClient.StopCardMonitor();
+		JcMonitorClient.StopCardMonitor();
 		await GetUserAndMeasureTime();
-		_jcMonitorClient.StartCardMonitor(() => Task.WaitAll(Refresh()), () => Task.WaitAll(ClearWindow()));
+		JcMonitorClient.StartCardMonitor(() => Task.WaitAll(Refresh()), () => Task.WaitAll(ClearWindow()));
 	}
 
 	private async Task GetUserAndMeasureTime()
@@ -55,8 +62,7 @@ public partial class Scan : ComponentBase
 			var stopWatch = new Stopwatch();
 			stopWatch.Start();
 			
-			var userService = new UserService(new JCUserRepository(_jcMonitorClient));
-			var user = userService.GetUser();
+			var user = UserService.GetUser();
 
 			_userVm = null;
 			if (user != null)

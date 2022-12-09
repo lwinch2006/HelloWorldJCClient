@@ -1,4 +1,7 @@
-﻿using Fluxor;
+﻿using BusinessLogic;
+using Fluxor;
+using Infrastructure;
+using JCClientCore;
 using Microsoft.Extensions.Logging;
 using UiShared.Models.Blazor.Redux.Stores;
 
@@ -14,6 +17,9 @@ public static class MauiProgram
 			.ConfigureFonts(fonts => { fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular"); });
 
 		builder.Services
+			.AddSingleton<IJCClient, JCClient>()
+			.AddScoped<IUserRepository, JCUserRepository>()
+			.AddScoped<IUserService, UserService>()
 			.AddFluxor(options =>
 			{
 				options.ScanAssemblies(typeof(AppStore).Assembly);
