@@ -39,6 +39,8 @@ public class UserService : IUserService
 
 	public User? GetUser()
 	{
+		_userRepository.Connect();
+		
 		var email = GetEmail();
 
 		if (string.IsNullOrWhiteSpace(email))

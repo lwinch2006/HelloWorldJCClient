@@ -3,12 +3,14 @@ using PCSC;
 using PCSC.Exceptions;
 using PCSC.Iso7816;
 using PCSC.Monitoring;
-using Exception = System.Exception;
 
 namespace JCClientCore;
 
 public class JCClient : IJCClient
 {
+	private Action? _cardInsertedEventHandler;
+	private Action? _cardRemovedEventHandler;
+	
 	private ISCardMonitor? _monitor;
 
 	public bool IsResponseSuccess(Response cardResponse)
@@ -21,6 +23,17 @@ public class JCClient : IJCClient
 		return cardResponse.SW1 == 0x61 && cardResponse.SW2 > 0x0;
 	}
 
+	public void StartCardMonitor()
+	{
+		if (_cardInsertedEventHandler == null
+		    || _cardRemovedEventHandler == null)
+		{
+			return;
+		}
+		
+		StartCardMonitor(_cardInsertedEventHandler, _cardRemovedEventHandler);
+	}
+	
 	public void StartCardMonitor(Action cardInsertedEventHandler, Action cardRemovedEventHandler)
 	{
 		var readerName = GetCardContext().GetReaders()?.FirstOrDefault();
@@ -32,6 +45,9 @@ public class JCClient : IJCClient
 
 		StopCardMonitor();
 
+		_cardInsertedEventHandler = cardInsertedEventHandler;
+		_cardRemovedEventHandler = cardRemovedEventHandler;
+		
 		_monitor = MonitorFactory.Instance.Create(SCardScope.System);
 		_monitor.StatusChanged += (sender, args) =>
 		{

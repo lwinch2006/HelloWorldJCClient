@@ -8,7 +8,7 @@
 }
 else
 {
-    <ReadOnlyUserDetails CssStyle="margin-top: 2rem;" User="@AppStore.UserRead" Time="@AppStore.Elapsed" Refresh="@(async () => await Refresh())"/>
+    <ReadOnlyUserDetails CssStyle="margin-top: 2rem;" User="@AppStore.UserRead" Time="@AppStore.Elapsed" Refresh="@Refresh"/>
     if (AppStore.IsLoading)
     {
         <div class="card progressbar-container">

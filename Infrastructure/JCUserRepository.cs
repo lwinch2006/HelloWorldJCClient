@@ -15,6 +15,11 @@ public class JCUserRepository : IUserRepository
 		_jcClient = jcClient;
 		_jcClient.TrySelectApplet(InfrastructureConstants.AppletAID);
 	}
+
+	public void Connect()
+	{
+		_jcClient.TrySelectApplet(InfrastructureConstants.AppletAID);
+	}
 	
 	public string GetFirstName()
 	{

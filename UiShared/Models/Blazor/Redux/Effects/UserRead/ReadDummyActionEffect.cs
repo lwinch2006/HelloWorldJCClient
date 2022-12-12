@@ -1,20 +1,20 @@
 using System.Diagnostics;
 using BlazorComponents.Models;
 using Fluxor;
-using UiShared.Models.Blazor.Redux.Actions;
+using UiShared.Models.Blazor.Redux.Actions.UserRead;
 
-namespace UiShared.Models.Blazor.Redux.Effects;
+namespace UiShared.Models.Blazor.Redux.Effects.UserRead;
 
-public class ReadDummyUserFromCardActionEffect : Effect<ReadDummyUserFromCardAction>
+public class ReadDummyActionEffect : Effect<ReadDummyAction>
 {
 	private readonly HttpClient _httpClient;
 	
-	public ReadDummyUserFromCardActionEffect(HttpClient httpClient)
+	public ReadDummyActionEffect(HttpClient httpClient)
 	{
 		_httpClient = httpClient;
 	}
 	
-	public override async Task HandleAsync(ReadDummyUserFromCardAction action, IDispatcher dispatcher)
+	public override async Task HandleAsync(ReadDummyAction action, IDispatcher dispatcher)
 	{
 		var stopWatch = new Stopwatch();
 		stopWatch.Start();
@@ -26,7 +26,7 @@ public class ReadDummyUserFromCardActionEffect : Effect<ReadDummyUserFromCardAct
 		
 		stopWatch.Stop();
 		
-		var updateUserReadAction = new UpdateUserReadAction(user, stopWatch.Elapsed);
+		var updateUserReadAction = new Actions.UserRead.UpdateAction(user, stopWatch.Elapsed);
 		dispatcher.Dispatch(updateUserReadAction);
 	}
 }

@@ -22,8 +22,10 @@ public static class MauiProgram
 			.AddScoped<IUserService, UserService>()
 			.AddFluxor(options =>
 			{
+				options.WithLifetime(StoreLifetime.Singleton);
 				options.ScanAssemblies(typeof(AppStore).Assembly);
 			})
+			.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost") })
 			.AddMauiBlazorWebView();
 
 #if DEBUG

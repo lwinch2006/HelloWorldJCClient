@@ -7,6 +7,7 @@ public interface IJCClient
 {
 	bool IsResponseSuccess(Response cardResponse);
 	bool IsGetResponseAnswer(Response cardResponse);
+	void StartCardMonitor();
 	void StartCardMonitor(Action cardInsertedEventHandler, Action cardRemovedEventHandler);
 	void StopCardMonitor();
 	void SelectApplet(string aid, string delimiter = ":");
