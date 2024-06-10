@@ -1,10 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <AssemblyName>Dka.Net.JCClientCore</AssemblyName>
+        <TargetFrameworks>net7.0;net8.0</TargetFrameworks>
     </PropertyGroup>
 
     <ItemGroup>
@@ -12,8 +12,8 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\pcsc-sharp\src\PCSC.Iso7816\PCSC.Iso7816.csproj" />
-      <ProjectReference Include="..\..\pcsc-sharp\src\PCSC\PCSC.csproj" />
+      <ProjectReference Include="..\..\CSharp_PCSCSharp\src\PCSC.Iso7816\PCSC.Iso7816.csproj" />
+      <ProjectReference Include="..\..\CSharp_PCSCSharp\src\PCSC\PCSC.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-namespace BlazorHybridApp;
+namespace BlazorHybridAppNet7;
 
 public static class BlazorHubridAppConstants
 {
