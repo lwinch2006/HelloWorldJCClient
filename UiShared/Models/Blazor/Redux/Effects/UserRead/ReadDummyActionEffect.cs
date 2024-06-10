@@ -18,8 +18,19 @@ public class ReadDummyActionEffect : Effect<ReadDummyAction>
 	{
 		var stopWatch = new Stopwatch();
 		stopWatch.Start();
+
+		byte[]? photoBytes = null; 
 		
-		var photoBytes = await _httpClient.GetByteArrayAsync("images/photo-exported-256.webp");
+		try
+		{
+			await using var stream = GetType().Assembly.GetManifestResourceStream("DummyPersonPhoto")!;
+			using var ms = new MemoryStream();
+			await stream.CopyToAsync(ms);
+			ms.Close();
+			photoBytes = ms.ToArray();
+		}
+		catch {}
+		
 		var user = new ReadOnlyUser("John", "Doe", "John.Doe@test.com", "+4711223344", photoBytes);
 
 		await Task.Delay(3000);
