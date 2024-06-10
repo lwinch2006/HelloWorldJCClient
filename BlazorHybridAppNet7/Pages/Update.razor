@@ -1,0 +1,13 @@
+@inherits Fluxor.Blazor.Web.Components.FluxorComponent
+@page "/update"
+
+<h1>Update</h1>
+
+@if (AppStore.UserWrite is not null)
+{
+    <p>User Write not null</p>
+}
+else
+{
+    <p>User Write null</p>
+}

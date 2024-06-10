@@ -55,14 +55,14 @@ public class UI
 			Console.WriteLine("Lastname: {0}", user.Lastname);
 			Console.WriteLine("Email: {0}", user.Email);
 			Console.WriteLine("Phone: {0}", user.Phone);
-			Console.WriteLine("Photo: {0}", user.Photo.Length > 0 ? "yes" : "no");
+			Console.WriteLine("Photo: {0}", user.Photo?.Length > 0 ? "yes" : "no");
 			
 			stopWatch.Stop();
 			var elapsed = stopWatch.Elapsed;
 			Console.WriteLine();
 			Console.WriteLine("Time: {0} seconds", elapsed.TotalSeconds);
 			
-			if (user.Photo.Length > 0)
+			if (user.Photo?.Length > 0)
 			{
 				File.WriteAllBytes("photo.webp", user.Photo);
 			}

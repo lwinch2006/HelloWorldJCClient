@@ -4,7 +4,7 @@ using UiShared.Models.Blazor.Redux.Actions.Card;
 using UiShared.Models.Blazor.Redux.Actions.UserRead;
 using UiShared.Models.Blazor.Redux.Stores;
 
-namespace BlazorHybridApp.Pages;
+namespace BlazorHybridAppNet7.Pages;
 
 public partial class Scan
 {
